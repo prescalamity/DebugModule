@@ -30,6 +30,11 @@ namespace DebugModule
 		/// </summary>
 		public static string debugCodeFormat = "";
 
+		/// <summary>
+		/// 忽略的函数名列表
+		/// </summary>
+		public static List<string> ignoreFunctionName = new List<string>();
+
 
 		//public static List<string> theSuffixFilePath = new List<string>();
 
