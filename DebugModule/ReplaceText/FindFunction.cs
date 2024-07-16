@@ -3,10 +3,28 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DebugModule
 {
+
+	public class CsharpKeyword
+	{
+		/// <summary>
+		/// class
+		/// </summary>
+		public static string classStr = "class";
+
+		/// <summary>
+		/// namespace
+		/// </summary>
+		public static string nameSpaceStr = "namespace";
+
+
+
+	}
+
 	public class FindFunction
 	{
 
@@ -95,6 +113,31 @@ namespace DebugModule
 
 			File.WriteAllText(_filePath, fileAllText);
 		}
+
+
+
+
+
+		public static List<string> ExtractFunctions(string codeFilePath)
+		{
+			string code = File.ReadAllText(codeFilePath);
+			return ExtractFunctionsFromCode(code);
+		}
+
+		public static List<string> ExtractFunctionsFromCode(string code)
+		{
+			List<string> functions = new List<string>();
+			string pattern = @"(?m)^(\s*)(public|private|protected|internal|static|abstract|override)\s+(void|class|int|string|char|float|double|long|byte|bool|enum)\s+(\w+)\s*\((.*?)\)(?=\s*{)";
+
+			MatchCollection matches = Regex.Matches(code, pattern);
+			foreach (Match match in matches)
+			{
+				functions.Add(match.Value.Trim());
+			}
+
+			return functions;
+		}
+
 
 
 	}
